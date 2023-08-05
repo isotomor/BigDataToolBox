@@ -6,7 +6,7 @@ from bigdatatoolbox.init_config import init_configuration, _get_config
 NAME_CONFIG = "config.yaml"
 
 
-def launcher(func: Callable, init_spark=False, use_databricks_spark=False **kwargs):
+def launcher(func: Callable, init_spark=False, use_databricks_spark=False, **kwargs):
     """
     Función que lanza las funciones pasadas como parámetros entrada.
     A todas las funciones les crea un config y un logger.

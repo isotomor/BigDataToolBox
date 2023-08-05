@@ -8,6 +8,7 @@ from datetime import datetime
 from bigdatatoolbox.lake_io import create_spark_session
 from bigdatatoolbox.project_data import ProjectData
 from bigdatatoolbox.config import config_dict
+from databricks.connect import DatabricksSession
 
 NAME_CONFIG = "config.yaml"
 
@@ -72,7 +73,7 @@ def init_spark_configuration(logger, config):
     return spark
 
 
-def get_spark_databricks(logger, config):
+def get_spark_databricks(logger):
     """
     Obtiene la sesión de databricks
 
@@ -81,23 +82,27 @@ def get_spark_databricks(logger, config):
     :return: Spark, async_runner
     """
     # Init Spark
-    logger.info("Getting spark session...")
-    def retrieve_workspace_instance_name():
-        return "adb-3983330658043373.13.azuredatabricks.net"
+    databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", None)
+    databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", None)
+    databricks_token = os.getenv("DATABRICKS_TOKEN", None)
+    try:
+        assert os.getenv("DATABRICKS_CLUSTER_ID")
+        assert os.getenv("DATABRICKS_INSTANCE_NAME")
+        assert os.getenv("DATABRICKS_TOKEN")
 
-    def retrieve_cluster_id():
-        return "0803-100328-sb152ftw"
+        logger.info("Getting spark session...")
 
-    def retrieve_token():
-        return "dapicb018c60b0cb4ea3102cfcfb4b750196-2"
+        spark = DatabricksSession.builder.remote(
+            host=f"https://{databricks_instance_name}",
+            token=databricks_token,
+            cluster_id=databricks_cluster_id
+        ).getOrCreate()
 
-    spark = DatabricksSession.builder.remote(
-        host=f"https://{retrieve_workspace_instance_name()}",
-        token=retrieve_token(),
-        cluster_id=retrieve_cluster_id()
-    ).getOrCreate()
+        logger.info("Spark session created")
 
-    logger.info("Spark session created")
+    except AssertionError:
+        logger.error("Para usar spark databricks son necesarias las variables de entorno")
+
     return spark
 
 def _get_config(folder, config_file_name):
@@ -152,7 +157,7 @@ def get_gcp_credentials_file(folder, config_file_name, levels=3):
         return ''
 
 
-def init_configuration(init_spark=False, use_databricks_spark=False):
+def init_configuration(init_spark=False, use_databricks_spark=False, use_google_cloud=False):
     """
     Función que inicializa la configuración del proyecto.
 
@@ -172,7 +177,7 @@ def init_configuration(init_spark=False, use_databricks_spark=False):
 
     # SESIONES DE BBDD si procede
     if use_databricks_spark:
-        spark =
+        spark = get_spark_databricks(logger=logger)
     elif init_spark:
         spark = init_spark_configuration(logger=logger, config=config)
     else:
@@ -180,9 +185,10 @@ def init_configuration(init_spark=False, use_databricks_spark=False):
 
     project_data = ProjectData(config=config, logger=logger, spark=spark)
 
-    # Guardamos la ruta del service account de Google
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = get_gcp_credentials_file(os.environ["ROOT_PATH"],
-                                                                            config["SERVICE_ACCOUNT_PYTHON"])
+    if use_google_cloud:
+        # Guardamos la ruta del service account de Google
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = get_gcp_credentials_file(os.environ["ROOT_PATH"],
+                                                                                config["SERVICE_ACCOUNT_PYTHON"])
 
     return project_data
 
