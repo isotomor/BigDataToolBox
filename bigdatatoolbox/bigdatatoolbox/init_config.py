@@ -72,6 +72,34 @@ def init_spark_configuration(logger, config):
     return spark
 
 
+def get_spark_databricks(logger, config):
+    """
+    Obtiene la sesión de databricks
+
+    :param logger: Logger
+    :param config: Diccionario de configuración
+    :return: Spark, async_runner
+    """
+    # Init Spark
+    logger.info("Getting spark session...")
+    def retrieve_workspace_instance_name():
+        return "adb-3983330658043373.13.azuredatabricks.net"
+
+    def retrieve_cluster_id():
+        return "0803-100328-sb152ftw"
+
+    def retrieve_token():
+        return "dapicb018c60b0cb4ea3102cfcfb4b750196-2"
+
+    spark = DatabricksSession.builder.remote(
+        host=f"https://{retrieve_workspace_instance_name()}",
+        token=retrieve_token(),
+        cluster_id=retrieve_cluster_id()
+    ).getOrCreate()
+
+    logger.info("Spark session created")
+    return spark
+
 def _get_config(folder, config_file_name):
     """
     Inicia el diccionario de configuración del proceso.
@@ -124,9 +152,12 @@ def get_gcp_credentials_file(folder, config_file_name, levels=3):
         return ''
 
 
-def init_configuration(init_spark=False):
+def init_configuration(init_spark=False, use_databricks_spark=False):
     """
     Función que inicializa la configuración del proyecto.
+
+    init_spark: Si va a True inicializa una sessión de spark y coge la configuración de config_dict
+    use_databricks_spark: Si va a True usa la sesión de spark de Databrkics.
     """
     # Lee la configuración del paquete
     config = config_dict
@@ -140,7 +171,12 @@ def init_configuration(init_spark=False):
         logger.debug(f"{clave}: {config[clave]}")
 
     # SESIONES DE BBDD si procede
-    spark = init_spark_configuration(logger=logger, config=config) if init_spark else None
+    if use_databricks_spark:
+        spark =
+    elif init_spark:
+        spark = init_spark_configuration(logger=logger, config=config)
+    else:
+        spark = None
 
     project_data = ProjectData(config=config, logger=logger, spark=spark)
 
