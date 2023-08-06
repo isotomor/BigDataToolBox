@@ -6,7 +6,7 @@ from pyspark.dbutils import DBUtils
 def get_dbutils(spark):
     return DBUtils(spark)
 
-def run_ingest_campaint_mailchimp(project_data, **_):
+def run_tablon(project_data, **_):
     schema = StructType([
         StructField('CustomerID', IntegerType(), False),
         StructField('FirstName', StringType(), False),
@@ -23,10 +23,17 @@ def run_ingest_campaint_mailchimp(project_data, **_):
     customers.show()
 
     ### Usamos DBUTILS
-    dbutils = get_dbutils(spark=spark)
+    dbutils = get_dbutils(spark=project_data.spark)
+
+    spark.conf.set(
+        "fs.azure.account.key.dataarquitectazureml.dfs.core.windows.net",
+        "3tc2TjcSDZpw1PPPI4ZI9KwQZ+ML9lCU8ekzywO5hlPkcw9GgiWKVu8zsVdhewLPCR2ZC5UPzgxm+AStzPCB6Q=="
+    )
+
+    project_data.spark.read.csv("abfss://raw@dataarquitectazureml.dfs.core.windows.net/circuits.csv")
 
     return None
 
 
 if __name__ == "__main__":
-    launcher(run_ingest_campaint_mailchimp, init_spark=True, use_databricks_spark=True)
+    launcher(run_tablon, init_spark=True, use_databricks_spark=True)

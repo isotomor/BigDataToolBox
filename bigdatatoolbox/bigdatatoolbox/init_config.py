@@ -91,7 +91,8 @@ def get_spark_databricks(logger):
         assert os.getenv("DATABRICKS_TOKEN")
 
         logger.info("Getting spark session...")
-
+        'https://adb-3983330658043373.13.azuredatabricks.net/'
+        'https://adb-3983330658043373.13.azuredatabricks.net'
         spark = DatabricksSession.builder.remote(
             host=f"https://{databricks_instance_name}",
             token=databricks_token,
