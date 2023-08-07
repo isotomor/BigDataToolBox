@@ -83,13 +83,9 @@ def get_spark_databricks(logger):
     :return: Spark, async_runner
     """
     # Init Spark
-    # databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", "0806-072732-s6vysj0v")
-    # databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", "adb-3983330658043373.13.azuredatabricks.net")
-    # databricks_token = os.getenv("DATABRICKS_TOKEN", "dapicb018c60b0cb4ea3102cfcfb4b750196-2")
-
-    databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", "")
-    databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", "")
-    databricks_token = os.getenv("DATABRICKS_TOKEN", "")
+    databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", None)
+    databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", None)
+    databricks_token = os.getenv("DATABRICKS_TOKEN", None)
 
     try:
         assert databricks_cluster_id
