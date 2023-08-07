@@ -1,0 +1,11 @@
+setup.cfg
+setup.py
+bigdatatoolbox.egg-info/PKG-INFO
+bigdatatoolbox.egg-info/SOURCES.txt
+bigdatatoolbox.egg-info/dependency_links.txt
+bigdatatoolbox.egg-info/entry_points.txt
+bigdatatoolbox.egg-info/requires.txt
+bigdatatoolbox.egg-info/top_level.txt
+src/__init__.py
+src/init_config.py
+src/run_tablon.py

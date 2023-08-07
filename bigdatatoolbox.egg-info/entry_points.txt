@@ -1,0 +1,5 @@
+[bigdatatoolbox]
+run = bigdatatoolbox.__main__:main
+
+[src]
+run = src.__main__:main
