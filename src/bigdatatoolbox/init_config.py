@@ -4,11 +4,12 @@ import os
 import logging
 from logging.handlers import HTTPHandler
 from datetime import datetime
-
-from bigdatatoolbox.lake_io import create_spark_session
-from bigdatatoolbox.project_data import ProjectData
-from bigdatatoolbox.config import config_dict
 from databricks.connect import DatabricksSession
+
+
+from .lake_io import create_spark_session
+from .project_data import ProjectData
+from .config import config_dict
 
 NAME_CONFIG = "config.yaml"
 
@@ -82,46 +83,34 @@ def get_spark_databricks(logger):
     :return: Spark, async_runner
     """
     # Init Spark
-    databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", None)
-    databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", None)
-    databricks_token = os.getenv("DATABRICKS_TOKEN", None)
+    # databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", "0806-072732-s6vysj0v")
+    # databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", "adb-3983330658043373.13.azuredatabricks.net")
+    # databricks_token = os.getenv("DATABRICKS_TOKEN", "dapicb018c60b0cb4ea3102cfcfb4b750196-2")
+
+    databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", "")
+    databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", "")
+    databricks_token = os.getenv("DATABRICKS_TOKEN", "")
+
     try:
-        assert os.getenv("DATABRICKS_CLUSTER_ID")
-        assert os.getenv("DATABRICKS_INSTANCE_NAME")
-        assert os.getenv("DATABRICKS_TOKEN")
-
-        logger.info("Getting spark session...")
-        'https://adb-3983330658043373.13.azuredatabricks.net/'
-        'https://adb-3983330658043373.13.azuredatabricks.net'
-        spark = DatabricksSession.builder.remote(
-            host=f"https://{databricks_instance_name}",
-            token=databricks_token,
-            cluster_id=databricks_cluster_id
-        ).getOrCreate()
-
-        logger.info("Spark session created")
+        assert databricks_cluster_id
+        assert databricks_instance_name
+        assert databricks_token
 
     except AssertionError:
         logger.error("Para usar spark databricks son necesarias las variables de entorno")
 
+    logger.info("Getting spark session...")
+    'https://adb-3983330658043373.13.azuredatabricks.net/'
+    'https://adb-3983330658043373.13.azuredatabricks.net'
+    spark = DatabricksSession.builder.remote(
+        host=f"https://{databricks_instance_name}",
+        token=databricks_token,
+        cluster_id=databricks_cluster_id
+    ).getOrCreate()
+
+    logger.info("Spark session created")
+
     return spark
-
-def _get_config(folder, config_file_name):
-    """
-    Inicia el diccionario de configuración del proceso.
-    Encuentra el config si esta dentro de ./src, o en 3 directorios anteriores
-    """
-    config_file_path = search_config_file(folder, config_file_name)
-    if config_file_path:
-        with open(config_file_path) as conf_file:
-            data = conf_file.read()
-        return yaml.safe_load(data)
-
-    else:
-        print("FIN DEL PROGRAMA\nERROR. No se encuentra", config_file_name, "en", folder,
-              "mas ./src y 3 directorios anteriores")
-        quit()
-
 
 def search_config_file(folder, config_file_path, levels=3):
     """
@@ -158,7 +147,7 @@ def get_gcp_credentials_file(folder, config_file_name, levels=3):
         return ''
 
 
-def init_configuration(init_spark=False, use_databricks_spark=False, use_google_cloud=False, program_config={}):
+def init_configuration(init_spark=False, use_databricks_spark=False, use_google_cloud=False):
     """
     Función que inicializa la configuración del proyecto.
 
@@ -167,7 +156,6 @@ def init_configuration(init_spark=False, use_databricks_spark=False, use_google_
     """
     # Lee la configuración del paquete
     config = config_dict
-    config.update(program_config)
 
     logger = create_logger(log_name=config["LOGGER_PREFIX"], log_folder=config["LOGGER_PATH"],
                            filename=config["LOG_FILENAME"], log_format=config["LOG_FORMAT"])

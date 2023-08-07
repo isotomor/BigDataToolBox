@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
-
+import atexit
+import sys
 import src
 
 setup(
@@ -9,9 +10,9 @@ setup(
   url='https://databricks.com',
   author_email='nacho.soto@thebridgeschool.es',
   description='my test wheel',
-  packages=find_packages(include=['src']),
+  packages=find_packages(),
   entry_points={
-    'src': 'run=__main__:main',
+    'group_1': 'run=src.__main__:main'
   },
   install_requires=[
     'setuptools'

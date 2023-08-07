@@ -1,5 +1,3 @@
-
-
 class Lake(object):
     """
     Clase encargada de gestionar las llamadas al datalake, escritura y lectura de datos con las diferentes interfaces.
@@ -9,3 +7,4 @@ class Lake(object):
         self.config = config
         self.logger = logger
         self.spark = spark
+
