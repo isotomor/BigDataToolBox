@@ -6,7 +6,7 @@ from init_config import launcher
 from src.run_tablon import run_tablon
 
 sys.path.insert(0, "src.zip")
-sys.path.insert(1, "bigdatatoolbox.zip")
+sys.path.insert(1, "src.zip")
 
 JOBS = dict(
     JOB_RUN_TABLON=dict(function=run_tablon, init_spark=True, use_databricks_spark=True)

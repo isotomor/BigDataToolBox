@@ -158,7 +158,7 @@ def get_gcp_credentials_file(folder, config_file_name, levels=3):
         return ''
 
 
-def init_configuration(init_spark=False, use_databricks_spark=False, use_google_cloud=False):
+def init_configuration(init_spark=False, use_databricks_spark=False, use_google_cloud=False, program_config={}):
     """
     Función que inicializa la configuración del proyecto.
 
@@ -167,7 +167,7 @@ def init_configuration(init_spark=False, use_databricks_spark=False, use_google_
     """
     # Lee la configuración del paquete
     config = config_dict
-    # config = _get_config(folder=os.path.abspath(__file__), config_file_name=NAME_CONFIG)
+    config.update(program_config)
 
     logger = create_logger(log_name=config["LOGGER_PREFIX"], log_folder=config["LOGGER_PATH"],
                            filename=config["LOG_FILENAME"], log_format=config["LOG_FORMAT"])

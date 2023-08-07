@@ -18,7 +18,8 @@ def launcher(func: Callable, init_spark=False, use_databricks_spark=False, **kwa
     run_config = _get_config(folder=root_path, config_file_name=NAME_CONFIG)
 
     # Configuración del DataLake
-    project_data = init_configuration(init_spark=init_spark, use_databricks_spark=use_databricks_spark)
+    project_data = init_configuration(init_spark=init_spark, use_databricks_spark=use_databricks_spark,
+                                      program_config=run_config)
 
     func(project_data, **kwargs)
 

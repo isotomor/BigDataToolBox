@@ -1,5 +1,7 @@
 setup.cfg
 setup.py
+bigdatatoolbox/__init__.py
+bigdatatoolbox/setup.py
 bigdatatoolbox.egg-info/PKG-INFO
 bigdatatoolbox.egg-info/SOURCES.txt
 bigdatatoolbox.egg-info/dependency_links.txt
