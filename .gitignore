@@ -1,1 +1,6 @@
-/logs
+# Ignorar archivos generados por el sistema
+__pycache__/
+*.pyc
+
+# Ignorar archivos de registro
+*.log
