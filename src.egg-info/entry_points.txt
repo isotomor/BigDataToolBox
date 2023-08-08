@@ -1,0 +1,2 @@
+[src]
+run = __main__:main

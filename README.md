@@ -2,7 +2,7 @@
 
 Comando para actualizar el python whell `python setup.py bdist_wheel`
 
-![img.png](img.png)
+![img.png](img/img.png)
 
 ### Spark Config
 
