@@ -26,10 +26,6 @@ def run_tablon(project_data, **_):
     ### Usamos DBUTILS
     dbutils = get_dbutils(spark=project_data.spark)
 
-    # project_data.spark.conf.set(
-    #     "fs.azure.account.key.dataarquitectazureml.dfs.core.windows.net",
-    #     "3tc2TjcSDZpw1PPPI4ZI9KwQZ+ML9lCU8ekzywO5hlPkcw9GgiWKVu8zsVdhewLPCR2ZC5UPzgxm+AStzPCB6Q=="
-    # )
     storaga_account = "cloudmlarquitecture"
     blob_storage = "raw"
 

@@ -96,8 +96,7 @@ def get_spark_databricks(logger):
         logger.error("Para usar spark databricks son necesarias las variables de entorno")
 
     logger.info("Getting spark session...")
-    'https://adb-3983330658043373.13.azuredatabricks.net/'
-    'https://adb-3983330658043373.13.azuredatabricks.net'
+
     spark = DatabricksSession.builder.remote(
         host=f"https://{databricks_instance_name}",
         token=databricks_token,
