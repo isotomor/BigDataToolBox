@@ -1,7 +1,4 @@
 config_dict = dict(
-    # CONECTION SERVICE ACCOUNT GOOGLE
-    SERVICE_ACCOUNT_PYTHON='eldiario-data-lake-2068416fd697.json',
-
     # SPARK
     # SPARK_DEFAULT_BROADCAST_TIMEOUT= 1000,
     # SPARK_DEFAULT_AUTO_BROADCAST_JOIN_THRESHOLD= 20000000,
@@ -28,12 +25,4 @@ config_dict = dict(
     LOGGER_PATH_TEST="./logs/test",
     LOG_FORMAT="%(asctime)s\t%(name)s\t%(levelname)s\t%(message)s",
 
-    # CONECTION DATA CRM
-    SERVER_AZURE='brainhubsqlserverpro.database.windows.net',
-    DATABASE_AZURE='brainhubsqldbpro',
-    USER_NAME='adminpro',
-    KEY_AZURE_SECRET_SQL_PRO='key-azure-sql-pro',
-    DRIVER='{ODBC Driver 17 for SQL Server}',
-
-    SLACK_ERROR_CHANNEL="/services/T029KC91MCJ/B03HKHKLQE8/t9n6HSP71UxbuACmiJhbJbNq"
 )
