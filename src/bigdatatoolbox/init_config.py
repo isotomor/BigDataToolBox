@@ -11,6 +11,7 @@ from .lake_io import create_spark_session
 from .project_data import ProjectData
 from .config import config_dict
 
+
 NAME_CONFIG = "config.yaml"
 
 
@@ -30,7 +31,6 @@ def create_logger(log_name: str, log_folder: str = None, filename: str = None,
     :param log_folder: nombre de los lgos (se le añadirá la fecha)
     :param filename: nombnre del archivo del log
     :param log_format: formato por defecto de los logs
-    :param slack_channel: canal donde escribir los logs
     :return: logger
     slack_channel
     """
@@ -79,7 +79,6 @@ def get_spark_databricks(logger):
     Obtiene la sesión de databricks
 
     :param logger: Logger
-    :param config: Diccionario de configuración
     :return: Spark, async_runner
     """
     # Init Spark
@@ -148,6 +147,7 @@ def init_configuration(init_spark=False, use_databricks_spark=False, use_google_
 
     init_spark: Si va a True inicializa una sessión de spark y coge la configuración de config_dict
     use_databricks_spark: Si va a True usa la sesión de spark de Databrkics.
+    user_google_cloud: Si la ejecución se hace a través de Google Cloud Platform
     """
     # Lee la configuración del paquete
     config = config_dict

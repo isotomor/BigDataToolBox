@@ -5,9 +5,11 @@ import sys
 
 from .init_config import launcher
 from .run_tablon import run_tablon
+from .models.main_baseline_prophet_cval import run_main_baseline_prophet_cval
 
 JOBS = dict(
-    JOB_RUN_TABLON=dict(function=run_tablon, init_spark=True, use_databricks_spark=True)
+    JOB_RUN_TABLON=dict(function=run_tablon, init_spark=True, use_databricks_spark=True),
+    JOB_PROPHET_CVAL=dict(function=run_main_baseline_prophet_cval, init_spark=Fase, use_databricks_spark=False)
 )
 
 

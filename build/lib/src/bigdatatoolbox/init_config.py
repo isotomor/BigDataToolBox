@@ -11,6 +11,7 @@ from .lake_io import create_spark_session
 from .project_data import ProjectData
 from .config import config_dict
 
+
 NAME_CONFIG = "config.yaml"
 
 
@@ -30,7 +31,6 @@ def create_logger(log_name: str, log_folder: str = None, filename: str = None,
     :param log_folder: nombre de los lgos (se le añadirá la fecha)
     :param filename: nombnre del archivo del log
     :param log_format: formato por defecto de los logs
-    :param slack_channel: canal donde escribir los logs
     :return: logger
     slack_channel
     """
@@ -79,17 +79,12 @@ def get_spark_databricks(logger):
     Obtiene la sesión de databricks
 
     :param logger: Logger
-    :param config: Diccionario de configuración
     :return: Spark, async_runner
     """
     # Init Spark
-    # databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", "0806-072732-s6vysj0v")
-    # databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", "adb-3983330658043373.13.azuredatabricks.net")
-    # databricks_token = os.getenv("DATABRICKS_TOKEN", "dapicb018c60b0cb4ea3102cfcfb4b750196-2")
-
-    databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", "")
-    databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", "")
-    databricks_token = os.getenv("DATABRICKS_TOKEN", "")
+    databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", None)
+    databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", None)
+    databricks_token = os.getenv("DATABRICKS_TOKEN", None)
 
     try:
         assert databricks_cluster_id
@@ -100,8 +95,7 @@ def get_spark_databricks(logger):
         logger.error("Para usar spark databricks son necesarias las variables de entorno")
 
     logger.info("Getting spark session...")
-    'https://adb-3983330658043373.13.azuredatabricks.net/'
-    'https://adb-3983330658043373.13.azuredatabricks.net'
+
     spark = DatabricksSession.builder.remote(
         host=f"https://{databricks_instance_name}",
         token=databricks_token,
@@ -153,6 +147,7 @@ def init_configuration(init_spark=False, use_databricks_spark=False, use_google_
 
     init_spark: Si va a True inicializa una sessión de spark y coge la configuración de config_dict
     use_databricks_spark: Si va a True usa la sesión de spark de Databrkics.
+    user_google_cloud: Si la ejecución se hace a través de Google Cloud Platform
     """
     # Lee la configuración del paquete
     config = config_dict

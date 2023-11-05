@@ -16,3 +16,4 @@ src/bigdatatoolbox/init_config.py
 src/bigdatatoolbox/lake.py
 src/bigdatatoolbox/lake_io.py
 src/bigdatatoolbox/project_data.py
+test/test_calculadora.py
