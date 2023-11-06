@@ -86,9 +86,9 @@ def get_spark_databricks(logger):
     databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", None)
     databricks_token = os.getenv("DATABRICKS_TOKEN", None)
 
-    looger.info(databricks_cluster_id)
-    looger.info(databricks_instance_name)
-    looger.info(databricks_token)
+    logger.info(databricks_cluster_id)
+    logger.info(databricks_instance_name)
+    logger.info(databricks_token)
 
     try:
         assert databricks_cluster_id
