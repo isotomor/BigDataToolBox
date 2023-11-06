@@ -16,4 +16,6 @@ src/bigdatatoolbox/init_config.py
 src/bigdatatoolbox/lake.py
 src/bigdatatoolbox/lake_io.py
 src/bigdatatoolbox/project_data.py
+src/models/__init__.py
+src/models/main_baseline_prophet_cval.py
 test/test_calculadora.py
