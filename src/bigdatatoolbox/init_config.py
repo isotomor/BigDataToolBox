@@ -85,7 +85,7 @@ def get_spark_databricks(logger):
     databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", None)
     databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", None)
     databricks_token = os.getenv("DATABRICKS_TOKEN", None)
-
+    """
     logger.info(databricks_cluster_id)
     logger.info(databricks_instance_name)
     logger.info(databricks_token)
@@ -97,14 +97,18 @@ def get_spark_databricks(logger):
 
     except AssertionError:
         logger.error("Para usar spark databricks son necesarias las variables de entorno")
-
+    """
     logger.info("Getting spark session...")
 
+    spark = SparkSession.builder.getOrCreate()
+
+    """
     spark = DatabricksSession.builder.remote(
         host=f"https://{databricks_instance_name}",
         token=databricks_token,
         cluster_id=databricks_cluster_id
     ).getOrCreate()
+    """
 
     logger.info("Spark session created")
 
