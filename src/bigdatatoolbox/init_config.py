@@ -5,6 +5,7 @@ import logging
 from logging.handlers import HTTPHandler
 from datetime import datetime
 from databricks.connect import DatabricksSession
+from pyspark.sql import SparkSession
 
 
 from .lake_io import create_spark_session

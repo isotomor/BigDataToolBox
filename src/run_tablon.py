@@ -29,7 +29,7 @@ def run_tablon(project_data, **_):
     storaga_account = "cloudmlarquitecture"
     blob_storage = "raw"
 
-    df = project_data.spark.read.csv(f"abfss://raw@{storaga_account}.dfs.core.windows.net")
+    df = project_data.spark.read.csv(f"abfss://raw@{storaga_account}.dfs.core.windows.net/products.csv")
     df.show()
 
     return None
