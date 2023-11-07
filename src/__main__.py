@@ -21,8 +21,7 @@ def main():
     except IndexError:
         raise Exception("Es necesario el argumento de la función a ejecutar")
 
-    if len(sys.argv) > 2:
-        enviroment = sys.argv[2]
+    enviroment = sys.argv[2] if len(sys.argv) > 2 else 'DESARROLLO'
 
     # Lanzamos la ejecución de la función.
     launcher(func=function["function"], init_spark=function["init_spark"],
