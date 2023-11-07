@@ -19,11 +19,14 @@ def main():
         job_function = sys.argv[1]
         function = JOBS.get(job_function)
     except IndexError:
-        raise Exception("Es necesario ")
+        raise Exception("Es necesario el argumento de la función a ejecutar")
+
+    if len(sys.argv) > 2:
+        enviroment = sys.argv[2]
 
     # Lanzamos la ejecución de la función.
     launcher(func=function["function"], init_spark=function["init_spark"],
-             use_databricks_spark=function["use_databricks_spark"])
+             use_databricks_spark=function["use_databricks_spark"], enviroment=enviroment)
 
 
 if __name__ == "__main__":

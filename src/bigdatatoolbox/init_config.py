@@ -75,41 +75,40 @@ def init_spark_configuration(logger, config):
     return spark
 
 
-def get_spark_databricks(logger):
+def get_spark_databricks(logger, enviroment='DESARROLLO'):
     """
     Obtiene la sesión de databricks
 
     :param logger: Logger
+    :param enviroment: Variable con el entorno en ejecución, si es PRODUCCION obtenemos la sessión en curso.
     :return: Spark, async_runner
     """
-    # Init Spark
-    databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", None)
-    databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", None)
-    databricks_token = os.getenv("DATABRICKS_TOKEN", None)
-    """
-    logger.info(databricks_cluster_id)
-    logger.info(databricks_instance_name)
-    logger.info(databricks_token)
 
-    try:
-        assert databricks_cluster_id
-        assert databricks_instance_name
-        assert databricks_token
+    if enviroment == 'PRODUCCION':
 
-    except AssertionError:
-        logger.error("Para usar spark databricks son necesarias las variables de entorno")
-    """
-    logger.info("Getting spark session...")
+        logger.info("Getting production spark session...")
+        spark = SparkSession.builder.getOrCreate()
+    else:
 
-    spark = SparkSession.builder.getOrCreate()
+        # Init Spark
+        databricks_cluster_id = os.getenv("DATABRICKS_CLUSTER_ID", None)
+        databricks_instance_name = os.getenv("DATABRICKS_INSTANCE_NAME", None)
+        databricks_token = os.getenv("DATABRICKS_TOKEN", None)
 
-    """
-    spark = DatabricksSession.builder.remote(
-        host=f"https://{databricks_instance_name}",
-        token=databricks_token,
-        cluster_id=databricks_cluster_id
-    ).getOrCreate()
-    """
+        try:
+            assert databricks_cluster_id
+            assert databricks_instance_name
+            assert databricks_token
+
+        except AssertionError:
+            logger.error("Para usar spark databricks son necesarias las variables de entorno")
+
+        logger.info("Getting spark session...")
+        spark = DatabricksSession.builder.remote(
+            host=f"https://{databricks_instance_name}",
+            token=databricks_token,
+            cluster_id=databricks_cluster_id
+        ).getOrCreate()
 
     logger.info("Spark session created")
 
@@ -150,7 +149,7 @@ def get_gcp_credentials_file(folder, config_file_name, levels=3):
         return ''
 
 
-def init_configuration(init_spark=False, use_databricks_spark=False, use_google_cloud=False):
+def init_configuration(init_spark=False, use_databricks_spark=False, use_google_cloud=False, enviroment='DESARROLLO'):
     """
     Función que inicializa la configuración del proyecto.
 
@@ -170,7 +169,7 @@ def init_configuration(init_spark=False, use_databricks_spark=False, use_google_
 
     # SESIONES DE BBDD si procede
     if use_databricks_spark:
-        spark = get_spark_databricks(logger=logger)
+        spark = get_spark_databricks(logger=logger, enviroment=enviroment)
     elif init_spark:
         spark = init_spark_configuration(logger=logger, config=config)
     else:
