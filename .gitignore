@@ -9,3 +9,5 @@ __pycache__/
 .databricks/
 .idea/
 .vscode/
+.build/
+.bigdatatoolbox.egg-info/
