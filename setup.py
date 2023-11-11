@@ -9,7 +9,7 @@ setup(
   author=src.__author__,
   url='https://databricks.com',
   author_email='nacho.soto@thebridgeschool.es',
-  description='my test wheel',
+  description='Python Wheel para ',
   packages=find_packages(),
   entry_points={
     'group_1': 'run=src.__main__:main'

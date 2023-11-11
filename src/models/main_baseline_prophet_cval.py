@@ -238,7 +238,11 @@ def main_baseline_prophet_cval(project_data, input_path, train_output_path, esti
         date = datetime.today().strftime('%Y-%m-%d')
 
     # Se leen los datos:
-    df = pd.read_parquet(f"{input_path}{df_name}.parquet")
+    print(f"El input_path es: {input_path}")
+    print(f"El df_name es: {df_name}")
+    # df = pd.read_parquet(f"{input_path}{df_name}.parquet")
+    storaga_account = "cloudmlarquitecture"
+    df = pd.read_parquet(f"abfss://raw@{storaga_account}.dfs.core.windows.net/dataframe.parquet")
     data = df[['snapshot_date', 'price', 'id_', 'sales']].copy()
     data = data.rename(columns={'snapshot_date': 'date', 'id_': 'id'}, inplace=False)
 
