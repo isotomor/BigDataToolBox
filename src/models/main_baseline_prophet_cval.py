@@ -242,7 +242,9 @@ def main_baseline_prophet_cval(project_data, input_path, train_output_path, esti
     print(f"El df_name es: {df_name}")
     # df = pd.read_parquet(f"{input_path}{df_name}.parquet")
     storaga_account = "cloudmlarquitecture"
-    df = project_data.spark.read.csv(f"abfss://raw@{storaga_account}.dfs.core.windows.net/{df_name}.parquet").toPandas()
+    df = project_data.spark.read.parquet(f"abfss://raw@{storaga_account}.dfs.core.windows.net/{df_name}.parquet")
+    df = df.toPandas()
+    print(df.columns)
 
     data = df[['snapshot_date', 'price', 'id_', 'sales']].copy()
     data = data.rename(columns={'snapshot_date': 'date', 'id_': 'id'}, inplace=False)
