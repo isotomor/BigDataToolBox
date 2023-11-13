@@ -13,20 +13,22 @@ JOBS = dict(
 )
 
 
-def main():
-    # Obtenemos el nombre de la función como parámetro de entrada
+def main(function_main, enviroment_main):
     try:
-        job_function = sys.argv[1]
-        function = JOBS.get(job_function)
+        function = JOBS.get(function_main)
     except IndexError:
         raise Exception("Es necesario el argumento de la función a ejecutar")
 
-    enviroment = sys.argv[2] if len(sys.argv) > 2 else 'DESARROLLO'
-
     # Lanzamos la ejecución de la función.
     launcher(func=function["function"], init_spark=function["init_spark"],
-             use_databricks_spark=function["use_databricks_spark"], enviroment=enviroment)
+             use_databricks_spark=function["use_databricks_spark"],
+             enviroment=enviroment_main)
 
 
 if __name__ == "__main__":
-    main()
+
+    # Obtenemos el nombre de la función como parámetro de entrada
+    job_function = sys.argv[1]
+    enviroment = sys.argv[2] if len(sys.argv) > 2 else 'DESARROLLO'
+
+    main(function_main=function, enviroment_main=enviroment)
