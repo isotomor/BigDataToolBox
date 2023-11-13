@@ -8,4 +8,4 @@ if __name__ == "__main__":
     job_function = sys.argv[1]
     enviroment = sys.argv[2] if len(sys.argv) > 2 else 'DESARROLLO'
 
-    main(function_main=function, enviroment_main=enviroment)
+    main(function_main=job_function, enviroment_main=enviroment)
