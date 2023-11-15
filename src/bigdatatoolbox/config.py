@@ -25,4 +25,10 @@ config_dict = dict(
     LOGGER_PATH_TEST="./logs/test",
     LOG_FORMAT="%(asctime)s\t%(name)s\t%(levelname)s\t%(message)s",
 
+    # Analytics files
+    RUN_TABLON="run_tablon",
+    STORAGE_ACCOUNT="sacursodecide",
+    RAW_BLOB_STORAGE="raw"
+
 )
+
