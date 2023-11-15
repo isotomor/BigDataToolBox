@@ -7,7 +7,7 @@ Comando para actualizar el python whell `python setup.py bdist_wheel`
 ### Spark Config
 
 ````txt
-fs.azure.account.key.cloudmlarquitecture.dfs.core.windows.net {{secrets/scope-databricks-thebridge/cloudmlarquitecture-key}}
+fs.azure.account.key.sacursodecide.dfs.core.windows.net {{secrets/scope-isoto/storage-access-key}}
 ````
 
 ## Enviroment variables 

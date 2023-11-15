@@ -241,8 +241,10 @@ def main_baseline_prophet_cval(project_data, input_path, train_output_path, esti
     print(f"El input_path es: {input_path}")
     print(f"El df_name es: {df_name}")
     # df = pd.read_parquet(f"{input_path}{df_name}.parquet")
-    storaga_account = "cloudmlarquitecture"
-    df = project_data.spark.read.parquet(f"abfss://raw@{storaga_account}.dfs.core.windows.net/{df_name}.parquet")
+
+    df = project_data.read_spark_parquet_files(storage_account=project_data.config["STORAGE_ACCOUNT"],
+                                               blob_storage=project_data.config["RAW_BLOB_STORAGE"],
+                                               file_name=f"{df_name}.parquet")
     df = df.toPandas()
     print(df.columns)
 
@@ -334,4 +336,4 @@ def run_main_baseline_prophet_cval(project_data, **_):
 
 
 if __name__ == "__main__":
-    launcher(run_main_baseline_prophet_cval, init_spark=False, use_databricks_spark=False)
+    launcher(run_main_baseline_prophet_cval, init_spark=True, use_databricks_spark=True)

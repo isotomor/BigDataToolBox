@@ -26,15 +26,14 @@ def run_tablon(project_data, **_):
     ### Usamos DBUTILS
     dbutils = get_dbutils(spark=project_data.spark)
 
-    storaga_account = "cloudmlarquitecture"
-    blob_storage = "raw"
+    df = project_data.read_spark_csv_files(storage_account=project_data.config["STORAGE_ACCOUNT"],
+                                           blob_storage=project_data.config["RAW_BLOB_STORAGE"],
+                                           file_name="products.csv")
 
-    df = project_data.spark.read.csv(f"abfss://raw@{storaga_account}.dfs.core.windows.net/products.csv")
     df.show()
 
     return None
 
 
 if __name__ == "__main__":
-    launcher(run_tablon, init_spark=True, use_databricks_spark=True, 
-             enviroment='PRODUCCION')
+    launcher(run_tablon, init_spark=True, use_databricks_spark=True)
