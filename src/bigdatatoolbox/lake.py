@@ -20,6 +20,7 @@ class Lake(object):
         """
         Función que recibe Un Storage, un fichero en un blob de databricks.
         """
-        df = self.spark.read.csv(f"abfss://{blob_storage}@{storage_account}.dfs.core.windows.net/{file_name}")
+        df = self.spark.read.csv(f"abfss://{blob_storage}@{storage_account}.dfs.core.windows.net/{file_name}",
+                                 header=False, sep=";")
 
         return df
