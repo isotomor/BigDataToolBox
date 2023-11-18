@@ -14,7 +14,6 @@ JOBS = dict(
 
 
 def main():
-    print("Iniciando proceso...")
     # Obtenemos el nombre de la función como parámetro de entrada
     job_function = sys.argv[1]
     enviroment = sys.argv[2] if len(sys.argv) > 2 else 'DESARROLLO'
